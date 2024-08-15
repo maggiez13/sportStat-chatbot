@@ -14,7 +14,7 @@ export default function Home() {
 
   const sendMessage = async () => {
     const userMessage = message.trim().toLowerCase();
-    setMessage("");
+    setMessage(""); 
     setMessages((messages) => [
       ...messages,
       { role: "user", content: message },
@@ -78,6 +78,13 @@ export default function Home() {
     ]);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); 
+      sendMessage();
+    }
+  };
+
   return (
     <Box
       width="100vw"
@@ -133,6 +140,8 @@ export default function Home() {
             fullWidth
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
+            multiline
           />
           <Button variant="contained" onClick={sendMessage}>
             Send
